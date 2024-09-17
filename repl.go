@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	""
+	"github.com/Santiparra/Pokedex-CLI/internal/pokeapi"
 )
 
 type cliCommand struct {
@@ -20,7 +20,7 @@ type config struct {
 	prevLocationsURL *string
 }
 
-func runRepl() {
+func runRepl(cfg *config) {
 	reader := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("PokeDex >")
@@ -35,7 +35,7 @@ func runRepl() {
 
 		command, exist := getCommands()[commandName]
 		if exist {
-			err := command.callback()
+			err := command.callback(cfg)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -64,6 +64,16 @@ func getCommands() map[string]cliCommand {
 			name: "exit",
 			description: "Exit CLI",
 			callback: commandExit,
+		},
+		"map": {
+			name:        "map",
+			description: "Go to locations next page",
+			callback:    commandMapf,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Go to locations previous page",
+			callback:    commandMapb,
 		},
 	}
 }
