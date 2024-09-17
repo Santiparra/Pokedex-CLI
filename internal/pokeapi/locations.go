@@ -19,7 +19,7 @@ func (c *Client) ListLocations(pageURL *string) (RespShallowLocations, error) {
 		if err != nil {
 			return RespShallowLocations{}, err
 		}
-		fmt.Println("Retrieving Data From Cache")
+		fmt.Println("Retrieving Data From Cache...")
 		return locationsResp, nil
 	}
 
